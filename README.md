@@ -1,48 +1,39 @@
-ROS 2 Image Conversion Package
+# **ROS 2 Image Conversion Package**
 
-Overview
+## **Overview**
+This package provides a ROS 2 node (`image_conversion_node`) that subscribes to an image topic (e.g., from the `usb_cam` package), processes the image (converting between grayscale and color modes), and republishes it to another topic. The node allows switching between grayscale and color modes via a ROS 2 service.
 
-This package provides a ROS 2 node (image_conversion_node) that subscribes to an image topic (e.g., from the usb_cam package), processes the image (converting between grayscale and color modes), and republishes it to another topic. The node allows switching between grayscale and color modes via a ROS 2 service.
+## **Features**
+- Subscribes to a camera image topic.
+- Publishes the processed image to a separate topic.
+- Provides a service to toggle between grayscale and color processing modes.
 
-Features
+## **Requirements**
+- ROS 2 (Tested on Jazzy or compatible versions)
+- OpenCV (for image processing)
+- `usb_cam` package for camera input
 
-	•	Subscribes to a camera image topic.
-	•	Publishes the processed image to a separate topic.
-	•	Provides a service to toggle between grayscale and color processing modes.
+## **Installation**
 
-Requirements
+1. Clone the repository into your ROS 2 workspace:
 
-	•	ROS 2 (Tested on Jazzy or compatible versions)
-	•	OpenCV (for image processing)
-	•	usb_cam package for camera input
+   ```bash
+   cd ~/ros2_ws/src
+   git clone https://github.com/kirtiraj2215/Image_conversion_node
 
-Installation
+2.Build the workspace
+  cd ~/ros2_ws
+  colcon build
+  source install/setup.bash
 
-	1.	Clone the repository into your ROS 2 workspace:
-
-cd ~/ros2_ws/src
-git clone <your-repo-link>
-
-
-	2.	Build the workspace:
-
-cd ~/ros2_ws
-colcon build
-source install/setup.bash
-
-
-	3.	Verify the installation:
-
-ros2 pkg list | grep image_conversion
-
-
+3.Verify the installation
+  ros2 pkg list | grep image_conversion
 
 Usage
 
 Launch the Nodes
 
 Run the following command to start the image conversion node and usb_cam node:
-
 ros2 launch image_conversion image_conversion_launch.py
 
 This will:
@@ -63,11 +54,9 @@ The image_conversion_node provides a service to toggle the mode:
 Call the service:
 
 Example to switch to grayscale mode:
-
 ros2 service call /set_mode std_srvs/srv/SetBool "{data: true}"
 
 Switch back to color mode:
-
 ros2 service call /set_mode std_srvs/srv/SetBool "{data: false}"
 
 Configuration
@@ -77,7 +66,6 @@ Parameters can be set in the launch file (image_conversion_launch.py):
 	•	output_topic: Processed image output topic (default: /image_converted)
 
 Example modification in the launch file:
-
 launch_ros.actions.Node(
     package='image_conversion',
     executable='image_conversion_node',
@@ -90,14 +78,14 @@ Launch File
 The launch file (image_conversion_launch.py) starts both the usb_cam and image_conversion nodes. You can modify parameters as needed.
 
 Structure
-
 image_conversion/
 ├── CMakeLists.txt
 ├── package.xml
 ├── launch/
 │   └── image_conversion_launch.py
 ├── src/
-│   ├── image_conversion_node.cpp
+│   └── image_conversion_node.cpp
 ├── include/
 │   └── image_conversion/
 │       └── image_conversion_node.hpp
+
